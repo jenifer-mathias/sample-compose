@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">test compose</string>
+
+    <string name="description_icon">Clique aqui para marcar essa opção</string>
+
+    <string name="bigger_text">Lorem ipsum suscipit fames porta at curae platea, fusce gravida eros convallis
+        ipsum porttitor curae dictumst, donec ut commodo sollicitudin facilisis rhoncus.
+        primis porta ut nam consequat aptent rhoncus enim sodales, taciti
+        vestibulum erat lacus tempor dui tellus metus eros, dictum amet litora ad
+        fames bibendum urna. vitae ipsum iaculis tincidunt morbi sapien id ultricies
+        viverra id ligula ante, integer suspendisse velit facilisis orci varius
+        integer vestibulum sollicitudin massa. est pellentesque curabitur consectetur
+        vehicula condimentum nam vehicula sapien, etiam ante euismod urna erat
+        congue habitasse ad felis, ultricies erat sapien fermentum placerat id sapien.
+        Bibendum nulla semper ultrices amet porta class aptent magna nostra, turpis
+        posuere arcu euismod augue consequat lectus rutrum dui, condimentum vehicula
+        nibh duis pharetra justo eros arcu. vel imperdiet class elementum fringilla
+        eros ullamcorper curabitur scelerisque sagittis gravida, facilisis lacus
+        curabitur nisl integer dapibus praesent donec nibh, donec conubia mattis
+        mollis etiam venenatis ac potenti lobortis.</string>
 </resources>

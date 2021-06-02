@@ -4,21 +4,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.ArrowRight
-import androidx.compose.material.icons.twotone.CheckBoxOutlineBlank
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.*
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.testcompose.R
@@ -36,15 +41,21 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun CreateAccessibilityScreen() {
-    Column {
-        makeHeader()
-        makePartToCheckClause()
-        makePartToGoToNextScreen()
+    Column(
+        modifier = Modifier
+            .verticalScroll(
+                rememberScrollState()
+            )
+    ) {
+        MakeHeader()
+        MakePartToCheckClause()
+        MakeSecondHeader()
+        MakePartToGoToNextScreen()
     }
 }
 
 @Composable
-fun makeHeader() {
+fun MakeHeader() {
     Column(modifier = Modifier.semantics(mergeDescendants = true) {}) {
         Box(
             modifier = Modifier
@@ -62,74 +73,123 @@ fun makeHeader() {
             modifier = Modifier
                 .padding(all = 16.dp)
                 .semantics { heading() },
-            text = "Escute suas músicas favoritas",
-            style = typography.h4,
-            maxLines = 2,
+            text = "Lorem ipsum curae diam, nostra",
+            style = typography.h4
         )
     }
 }
 
 @Composable
-fun makePartToCheckClause() {
+fun MakePartToCheckClause() {
     Spacer(modifier = Modifier.height(20.dp))
-    Row {
-        IconButton(
-            modifier = Modifier
-                .padding(start = 10.dp)
-                .size(40.dp),
-            onClick = { }
-        ) {
-            Icon(
+    Column {
+        Row {
+            val firstCheckboxIsChecked = remember { mutableStateOf(false) }
+            Checkbox(
+                enabled = true,
+                checked = firstCheckboxIsChecked.value,
+                onCheckedChange = { firstCheckboxIsChecked.value = it },
                 modifier = Modifier
-                    .size(40.dp),
-                contentDescription = "Clique aqui para marcar essa opção",
-                imageVector = Icons.TwoTone.CheckBoxOutlineBlank,
+                    .clearAndSetSemantics { }
+                    .padding(start = 16.dp),
+                colors = CheckboxDefaults.colors(MaterialTheme.colors.secondaryVariant)
+            )
+            Text(
+                modifier = Modifier
+                    .padding(start = 16.dp),
+                text = "Lorem ipsum euismod rutrum. ",
+                style = typography.subtitle1
             )
         }
+        Row(modifier = Modifier.padding(top = 24.dp)) {
+            val secondCheckboxIsChecked = remember { mutableStateOf(false) }
+            Checkbox(
+                enabled = true,
+                checked = secondCheckboxIsChecked.value,
+                onCheckedChange = { secondCheckboxIsChecked.value = it },
+                modifier = Modifier
+                    .padding(start = 16.dp),
+                colors = CheckboxDefaults.colors(MaterialTheme.colors.secondaryVariant)
+            )
+            Text(
+                modifier = Modifier
+                    .padding(start = 16.dp),
+                text = "Lorem ipsum convallis port. ",
+                style = typography.subtitle1
+            )
+        }
+    }
+    Row(modifier = Modifier.padding(top = 24.dp)) {
+        val thirdCheckboxIsChecked = remember { mutableStateOf(false) }
+        Checkbox(
+            enabled = true,
+            checked = thirdCheckboxIsChecked.value,
+            onCheckedChange = { thirdCheckboxIsChecked.value = it },
+            modifier = Modifier
+                .padding(start = 16.dp),
+            colors = CheckboxDefaults.colors(MaterialTheme.colors.secondaryVariant)
+        )
         Text(
             modifier = Modifier
-                .padding(start = 16.dp, top = 10.dp)
-                .clearAndSetSemantics { /* todo */ },
-            text = "Texto deve ser ignorado",
+                .padding(start = 16.dp),
+            text = "Lorem ipsum odio netus ut pretium, lacus scelerisque leo aenean. ",
             style = typography.subtitle1
-
         )
     }
 }
-
 
 @Composable
-fun makePartToGoToNextScreen() {
-    Spacer(modifier = Modifier.height(30.dp))
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(start = 16.dp)
-                .clip(shape = RoundedCornerShape(35.dp))
-                .background(MaterialTheme.colors.secondaryVariant)
-        ) {
-            IconButton(
-                modifier = Modifier
-                    .size(70.dp),
-                onClick = { }
-            ) {
-                Icon(
-                    modifier = Modifier.fillMaxSize(),
-                    imageVector = Icons.TwoTone.ArrowRight,
-                    contentDescription = "Clique aqui para avançar para a próxima tela"
-                )
-            }
-        }
+fun MakeSecondHeader() {
+    Spacer(modifier = Modifier.height(10.dp))
+    Column {
         Text(
-            modifier = Modifier.padding(16.dp),
-            text = "Lorem ipsum pharetra a elementum molestie ullamcorper aenean test",
+            modifier = Modifier
+                .padding(all = 16.dp)
+                .semantics { heading() },
+            text = "Lorem ipsum eleifend",
+            style = typography.h4
+        )
+        Text(
+            modifier = Modifier
+                .padding(16.dp)
+                .clearAndSetSemantics { /* todo */ },
+            text = stringResource(id = R.string.bigger_text),
             style = typography.subtitle1
         )
     }
 }
+
+@Composable
+fun MakePartToGoToNextScreen() {
+        Row(modifier = Modifier.padding(start = 16.dp, bottom = 10.dp)) {
+            Card(
+                modifier = Modifier
+                    .size(60.dp),
+                shape = CircleShape,
+                elevation = 2.dp
+            ) {
+                Image(
+                    painterResource(R.drawable.ic_right_arrow),
+                    contentDescription = "Clique aqui para avançar para a próxima tela",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clickable {  }
+                )
+            }
+//            Icon(
+//                painter = painterResource(R.drawable.ic_right_arrow),
+//                contentDescription = "Clique aqui para avançar para a próxima tela"
+//            )
+            Text(
+                modifier = Modifier.padding(start = 16.dp, top = 10.dp),
+                text = "Lorem ipsum pharetra a elementum molestie ullamcorper aenean test",
+                style = typography.subtitle1
+            )
+        }
+    }
+
+
 
 
 
