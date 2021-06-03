@@ -3,12 +3,10 @@ package com.example.testcompose.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
@@ -18,12 +16,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.testcompose.R
@@ -46,6 +43,7 @@ fun CreateAccessibilityScreen() {
             .verticalScroll(
                 rememberScrollState()
             )
+            .background(Color.White)
     ) {
         MakeHeader()
         MakePartToCheckClause()
@@ -60,7 +58,6 @@ fun MakeHeader() {
         Box(
             modifier = Modifier
                 .height(450.dp)
-                .semantics { /*todo*/ } //stateDescription = if (selected) ... else ... }
         ) {
             Image(
                 painter = painterResource(R.drawable.listening_to_music),
@@ -90,8 +87,10 @@ fun MakePartToCheckClause() {
                 checked = firstCheckboxIsChecked.value,
                 onCheckedChange = { firstCheckboxIsChecked.value = it },
                 modifier = Modifier
-                    .clearAndSetSemantics { }
-                    .padding(start = 16.dp),
+                    .padding(start = 16.dp)
+                    .clearAndSetSemantics {
+                        this.contentDescription = "Checkbox"
+                    },
                 colors = CheckboxDefaults.colors(MaterialTheme.colors.secondaryVariant)
             )
             Text(
@@ -101,14 +100,20 @@ fun MakePartToCheckClause() {
                 style = typography.subtitle1
             )
         }
-        Row(modifier = Modifier.padding(top = 24.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(top = 24.dp)
+        ) {
             val secondCheckboxIsChecked = remember { mutableStateOf(false) }
             Checkbox(
                 enabled = true,
                 checked = secondCheckboxIsChecked.value,
                 onCheckedChange = { secondCheckboxIsChecked.value = it },
                 modifier = Modifier
-                    .padding(start = 16.dp),
+                    .padding(start = 16.dp)
+                    .semantics {
+                        this.contentDescription = "Checkbox"
+                    },
                 colors = CheckboxDefaults.colors(MaterialTheme.colors.secondaryVariant)
             )
             Text(
@@ -131,6 +136,7 @@ fun MakePartToCheckClause() {
         )
         Text(
             modifier = Modifier
+                .semantics { SemanticsProperties.HorizontalScrollAxisRange }
                 .padding(start = 16.dp),
             text = "Lorem ipsum odio netus ut pretium, lacus scelerisque leo aenean. ",
             style = typography.subtitle1
@@ -161,33 +167,29 @@ fun MakeSecondHeader() {
 
 @Composable
 fun MakePartToGoToNextScreen() {
-        Row(modifier = Modifier.padding(start = 16.dp, bottom = 10.dp)) {
-            Card(
+    Row(modifier = Modifier.padding(start = 16.dp, bottom = 10.dp)) {
+        Card(
+            modifier = Modifier
+                .size(60.dp),
+            shape = CircleShape,
+            elevation = 2.dp
+        ) {
+            Image(
+                painterResource(R.drawable.ic_right_arrow),
+                contentDescription = "Clique aqui para avançar para a próxima tela",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(60.dp),
-                shape = CircleShape,
-                elevation = 2.dp
-            ) {
-                Image(
-                    painterResource(R.drawable.ic_right_arrow),
-                    contentDescription = "Clique aqui para avançar para a próxima tela",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(60.dp)
-                        .clickable {  }
-                )
-            }
-//            Icon(
-//                painter = painterResource(R.drawable.ic_right_arrow),
-//                contentDescription = "Clique aqui para avançar para a próxima tela"
-//            )
-            Text(
-                modifier = Modifier.padding(start = 16.dp, top = 10.dp),
-                text = "Lorem ipsum pharetra a elementum molestie ullamcorper aenean test",
-                style = typography.subtitle1
+                    .size(60.dp)
+                    .clickable { }
             )
         }
+        Text(
+            modifier = Modifier.padding(start = 16.dp, top = 10.dp),
+            text = "Lorem ipsum pharetra a elementum molestie ullamcorper aenean test",
+            style = typography.subtitle1
+        )
     }
+}
 
 
 
