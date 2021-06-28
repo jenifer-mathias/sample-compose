@@ -87,10 +87,7 @@ fun MakePartToCheckClause() {
                 checked = firstCheckboxIsChecked.value,
                 onCheckedChange = { firstCheckboxIsChecked.value = it },
                 modifier = Modifier
-                    .padding(start = 16.dp)
-                    .clearAndSetSemantics {
-                        this.contentDescription = "Checkbox"
-                    },
+                    .padding(start = 16.dp),
                 colors = CheckboxDefaults.colors(MaterialTheme.colors.secondaryVariant)
             )
             Text(
@@ -110,10 +107,7 @@ fun MakePartToCheckClause() {
                 checked = secondCheckboxIsChecked.value,
                 onCheckedChange = { secondCheckboxIsChecked.value = it },
                 modifier = Modifier
-                    .padding(start = 16.dp)
-                    .semantics {
-                        this.contentDescription = "Checkbox"
-                    },
+                    .padding(start = 16.dp),
                 colors = CheckboxDefaults.colors(MaterialTheme.colors.secondaryVariant)
             )
             Text(
@@ -158,7 +152,7 @@ fun MakeSecondHeader() {
         Text(
             modifier = Modifier
                 .padding(16.dp)
-                .clearAndSetSemantics { /* todo */ },
+                .clearAndSetSemantics { },
             text = stringResource(id = R.string.bigger_text),
             style = typography.subtitle1
         )
